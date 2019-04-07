@@ -1,4 +1,4 @@
-MPRJ - Exercícios
+Exercícios para o curso de R/tidyverse
 ================
 
 Listas:
