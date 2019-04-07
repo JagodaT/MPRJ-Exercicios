@@ -1,6 +1,5 @@
 MPRJ - Exercícios
 ================
-Thomás Jagoda
 
 Listas:
 -------
