@@ -1,7 +1,4 @@
 ---
-title: 'Exercícios para o curso de R/tidyverse'
-
-
 output: github_document
 ---
 
