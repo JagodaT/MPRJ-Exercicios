@@ -13,7 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Começando
+# Começando
 
 Antes de começar um trabalho no R, você deve crregador o pacote **tidyverse**. Caso não tenha instalado rode o comando `install.packages("tidyverse")` no seu console. 
 
@@ -82,8 +82,8 @@ Nesse exercício nós normalmente apenas mostramos os resultados e não os salva
 Agora podemos ir para os exercícios. A maioria das sessões virão com um exemplo para você olhar e ter uma ideia do que pode ser feito e em cada sessão terão exercícios para o melhor entendimento de cada verbo.
 
 
-#Arrange
-##Exemplo
+# Arrange
+## Exemplo
 **Questão:** Ordene os dados por mat_nota do maior para o menor. Quem teve a maior nota de matemática?
 
 
@@ -94,15 +94,15 @@ notas %>% arrange(desc(mat_nota))
 
 **Resposta:** Bobby e Alice. Ambos empataram na maior nota de matemática.
 
-##Exercícios
+## Exercícios
 
 
-* Ordene os dados pelo nome da primeira até a última letra do alfabeto.
-* Ordene os dados pelo gênero e em seguida faça females aparecer primeiro. Qual gênero aparentemente tem a melhor reading_nota?
-* Ordene os dados por escola, depois por professor, depois por gênero, depois nota de matemática e por último nota de reading.
+1. Ordene os dados pelo nome da primeira até a última letra do alfabeto.
+2. Ordene os dados pelo gênero e em seguida faça females aparecer primeiro. Qual gênero aparentemente tem a melhor reading_nota?
+3. Ordene os dados por escola, depois por professor, depois por gênero, depois nota de matemática e por último nota de reading.
 
 
-#Select
+# Select
 **Questão:** Selecione apenas as colunas nome, mat_nota e reading_nota.
 
 
@@ -111,16 +111,16 @@ notas %>% select(nome,mat_nota,reading_nota)
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Selecione todas as colunas exceto a coluna gênero.
-* Selecione todas as colunas exceto as colunas mat_nota e reading_nota.
-* Mantenha todas as colunas mas reordene e coloque a coluna gênero como a primeira.
+1. Selecione todas as colunas exceto a coluna gênero.
+2. Selecione todas as colunas exceto as colunas mat_nota e reading_nota.
+3. Mantenha todas as colunas mas reordene e coloque a coluna gênero como a primeira.
 
 
-#Filter
-##Exemplo
+# Filter
+## Exemplo
 **Questão:** Filtre os dados para estudantes que são homens (male) e são do sul (south).
 
 
@@ -129,12 +129,12 @@ notas %>% filter(genero == "male" & escola == "south")
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Filtre para estudantes que forma bem em matemática, você decide o que seria ir bem (nota que tirou).
-* Use o filtro para mostrar quantos estudantes tiveram uma nota em matemática de 4 ou mais e nota de reading de 3 ou mais.
-* Explique os erros em cada um dos blocos a seguir, então depois os conserte.
+1. Filtre para estudantes que forma bem em matemática, você decide o que seria ir bem (nota que tirou).
+2. Use o filtro para mostrar quantos estudantes tiveram uma nota em matemática de 4 ou mais e nota de reading de 3 ou mais.
+3. Explique os erros em cada um dos blocos a seguir, então depois os conserte.
 
 
 ```{r,eval=F}
@@ -145,18 +145,18 @@ notas %>% filter(escola == south)
 notas %>% filter(escola = "south")
 ```
 
-* Imagine que você está criando um programa de recuperação. Filtre os estudantes que foram 3 ou pior em matemática ou reading.
-* Filtre estudantes que tiveram uma nota em reading de 2,3 ou 4.
+4. Imagine que você está criando um programa de recuperação. Filtre os estudantes que foram 3 ou pior em matemática ou reading.
+5. Filtre estudantes que tiveram uma nota em reading de 2,3 ou 4.
 
 
-##Desafio
+## Desafio
 
 
 Filtre estudantes que tem um nome que começa com um "m". Dica: coloque "?str_sub" no console e veja o help dessa função.
 
 
-#Filtre com grupos
-##Exemplo
+# Filtre com grupos
+## Exemplo
 **Questão:** Filtre os professores cujo o melhor aluno de math tem nota 5.
 
 
@@ -165,15 +165,15 @@ notas %>% group_by(prof) %>% filter(max(mat_nota) == 5)
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Filtre para o gênero com uma nota média de matemática igual a 4. 
-* Explique porque o código remove estudantes que tem a Perry como professora deles.
+1. Filtre para o gênero com uma nota média de matemática igual a 4. 
+2. Explique porque o código remove estudantes que tem a Perry como professora deles.
 
 
-#Mutate
-##Exemplo
+# Mutate
+## Exemplo
 **Questão:** Tanto as notas de matemática quanto as de reading foram na verdade de 50, substitua as duas variáveis por 10 vezes seus valores originais.
 
 
@@ -183,17 +183,17 @@ notas %>% mutate(mat_nota = mat_nota*10,
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Crie uma nova coluna chamada "mat_reading_new" na qual é a média das notas de um estudante de matemática e reading.
-* Crie uma nova coluna "high_mat_achiever" que é um indicador de se o estudante ganhou um 4 ou mais na sua nota em matemática.
-* Cria uma nova coluna "reading_score_centered" que é a nota de reading de um estudante subtraída pela média da nota de reading de todos os estudantes.
-* Crie uma nova coluna "science_score". Você é livre para escolher essas notas.
+1. Crie uma nova coluna chamada "mat_reading_new" na qual é a média das notas de um estudante de matemática e reading.
+2. Crie uma nova coluna "high_mat_achiever" que é um indicador de se o estudante ganhou um 4 ou mais na sua nota em matemática.
+3. Cria uma nova coluna "reading_score_centered" que é a nota de reading de um estudante subtraída pela média da nota de reading de todos os estudantes.
+4. Crie uma nova coluna "science_score". Você é livre para escolher essas notas.
 
 
-#Mutate com grupos
-##Exemplo 
+# Mutate com grupos
+## Exemplo 
 **Questão:** Tanto Mike quanto Cindy tem um 4 para a nota de matemática deles. Mostre porque Mike tinha uma maior nota "mat_score_centered_by_gender".
 
 
@@ -202,15 +202,15 @@ notas %>% group_by(genero) %>% mutate(mat_score_centered_by_gender = mat_nota - 
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Crie uma coluna "reading_score_centered_by_teacher". O que você pode aprender com isso?
-* Faça uma coluna "number_of_students_in_class" que é o número de estudantes da classe de estudantes.
+1. Crie uma coluna "reading_score_centered_by_teacher". O que você pode aprender com isso?
+2. Faça uma coluna "number_of_students_in_class" que é o número de estudantes da classe de estudantes.
 
 
-#Summarize
-##Exemplo
+# Summarize
+## Exemplo
 **Questão:** Use o comando summarize para encontrar a média da nota de matemática para todos os alunos.
 
 
@@ -219,15 +219,15 @@ notas %>% summarise(mat_score_mean = mean(mat_nota))
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Use o comando summarize para encontrar a nota média de reading para todos os estudantes.
-* Use o comando summarize para encontrar a mediana para as notas de matemática e reading.
+1. Use o comando summarize para encontrar a nota média de reading para todos os estudantes.
+2. Use o comando summarize para encontrar a mediana para as notas de matemática e reading.
 
 
-#Summarize com grupos
-##Exemplo
+# Summarize com grupos
+## Exemplo
 **Questão:** Encontre a nota mínima de matemática para cada escola.
 
 
@@ -236,17 +236,17 @@ notas %>% group_by(escola) %>% summarise(min_mat_score = min(mat_nota))
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Encontre a nota máxima de math para cada professor.
-* Se agruparmos por gênero, e então sumarizarmos com a nota mínima de reading, quantas linhas o tibble resultante teria?
-* Lembre que `mutate` sempre mantém o mesmo número de linhas mas `summarize` normalmente reduz o número de linhas. Por qual motivo você acha que isso acontece? 
-* crie um tibble com a média e mediana da nota de reading por gênero, bem como o número de estudantes do gênero.
+1. Encontre a nota máxima de math para cada professor.
+2. Se agruparmos por gênero, e então sumarizarmos com a nota mínima de reading, quantas linhas o tibble resultante teria?
+3. Lembre que `mutate` sempre mantém o mesmo número de linhas mas `summarize` normalmente reduz o número de linhas. Por qual motivo você acha que isso acontece? 
+4. crie um tibble com a média e mediana da nota de reading por gênero, bem como o número de estudantes do gênero.
 
 
-#Combinando os verbos
-##Exemplo
+# Combinando os verbos
+## Exemplo
 **Questão:** Selecione apenas as colunas nome e mat_nota. Então crie uma nova coluna "mat_nota_ec" que é a nota de math dos estudantes mais 5 pontos extras. Finalmente, ordene o tibble por mat_nota_ec do menor para o maior.
 
 
@@ -258,13 +258,13 @@ notas %>%
 ```
 
 
-##Exercícios
+## Exercícios
 
 
-* Selecione toda coluna exceto a coluna prof. Crie uma nova variável chamada "mean_score" que é a média das notas de matemática e reading dos estudantes. Por último, ordene o tibble por mat_nota do menor para o maior.
-* Remova qualquer estudante que tenha smith como professor, então encontre a média de mat_nota por gênero.
-* Encontre o min, max e mediana de reading_nota para estudantes femininas da escola do sul.
-* Observe cada um dos blocos de códigos a seguir. Ambos fazem a mesma coisa. Qual deles você acha que é preferível do ponto de vista da eficiência do computador?
+1. Selecione toda coluna exceto a coluna prof. Crie uma nova variável chamada "mean_score" que é a média das notas de matemática e reading dos estudantes. Por último, ordene o tibble por mat_nota do menor para o maior.
+2. Remova qualquer estudante que tenha smith como professor, então encontre a média de mat_nota por gênero.
+3. Encontre o min, max e mediana de reading_nota para estudantes femininas da escola do sul.
+4. Observe cada um dos blocos de códigos a seguir. Ambos fazem a mesma coisa. Qual deles você acha que é preferível do ponto de vista da eficiência do computador?
 
 
 ```{r}
