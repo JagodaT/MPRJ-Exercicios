@@ -183,15 +183,11 @@ Esta parte é dedicada à visualização de distribuições. Separaremos em duas
 
 Utilizaremos um dataset contendo o preço de AirBnb por noite de ~1000 residências na Riviera francesa. Os dados estão armazenados no Github, e podem ser carregados da seguinte forma:
 
-```
+
+
+```{r}
 # Carregando o dataset a partir do github
 
-data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", header=TRUE)
-
-
-```
-
-```{r, include=F}
 data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", header=TRUE)
 ```
 
