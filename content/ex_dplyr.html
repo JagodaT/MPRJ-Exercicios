@@ -286,6 +286,16 @@ code > span.ot { color: #007020; }
 <li>Filtre para o gênero com uma nota média de matemática igual a 4.</li>
 <li>Explique porque o código remove estudantes que tem a Perry como professora deles.</li>
 </ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(prof) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">filter</span>(mat_nota <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 6
+## # Groups:   prof [2]
+##   nome  escola prof    genero mat_nota reading_nota
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 carol south  johnson female        3            5
+## 2 greg  south  johnson male          2            2
+## 3 peter north  smith   male          3            5</code></pre>
 </div>
 </div>
 <div id="mutate" class="section level1">
@@ -293,8 +303,8 @@ code > span.ot { color: #007020; }
 <div id="exemplo-3" class="section level2">
 <h2>Exemplo</h2>
 <p><strong>Questão:</strong> Tanto as notas de matemática quanto as de reading foram na verdade de 50, substitua as duas variáveis por 10 vezes seus valores originais.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mat_nota =</span> mat_nota<span class="op">*</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb19-2" title="2">                  <span class="dt">reading_nota =</span> reading_nota<span class="op">*</span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mat_nota =</span> mat_nota<span class="op">*</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb21-2" title="2">                  <span class="dt">reading_nota =</span> reading_nota<span class="op">*</span><span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 6
 ##   nome   escola prof    genero mat_nota reading_nota
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;        &lt;dbl&gt;
@@ -323,7 +333,7 @@ code > span.ot { color: #007020; }
 <div id="exemplo-4" class="section level2">
 <h2>Exemplo</h2>
 <p><strong>Questão:</strong> Tanto Mike quanto Cindy tem um 4 para a nota de matemática deles. Mostre porque Mike tinha uma maior nota “mat_score_centered_by_gender”.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(genero) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mat_score_centered_by_gender =</span> mat_nota <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(mat_nota))</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(genero) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mat_score_centered_by_gender =</span> mat_nota <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(mat_nota))</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 7
 ## # Groups:   genero [2]
 ##   nome   escola prof   genero mat_nota reading_nota mat_score_centered_by_~
@@ -351,7 +361,7 @@ code > span.ot { color: #007020; }
 <div id="exemplo-5" class="section level2">
 <h2>Exemplo</h2>
 <p><strong>Questão:</strong> Use o comando summarize para encontrar a média da nota de matemática para todos os alunos.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mat_score_mean =</span> <span class="kw">mean</span>(mat_nota))</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mat_score_mean =</span> <span class="kw">mean</span>(mat_nota))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   mat_score_mean
 ##            &lt;dbl&gt;
@@ -370,7 +380,7 @@ code > span.ot { color: #007020; }
 <div id="exemplo-6" class="section level2">
 <h2>Exemplo</h2>
 <p><strong>Questão:</strong> Encontre a nota mínima de matemática para cada escola.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(escola) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">min_mat_score =</span> <span class="kw">min</span>(mat_nota))</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(escola) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">min_mat_score =</span> <span class="kw">min</span>(mat_nota))</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   escola min_mat_score
 ##   &lt;chr&gt;          &lt;dbl&gt;
@@ -392,10 +402,10 @@ code > span.ot { color: #007020; }
 <div id="exemplo-7" class="section level2">
 <h2>Exemplo</h2>
 <p><strong>Questão:</strong> Selecione apenas as colunas nome e mat_nota. Então crie uma nova coluna “mat_nota_ec” que é a nota de math dos estudantes mais 5 pontos extras. Finalmente, ordene o tibble por mat_nota_ec do menor para o maior.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">select</span>(nome,mat_nota) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mat_nota_ec =</span> mat_nota <span class="op">+</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(mat_nota_ec)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">select</span>(nome,mat_nota) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mat_nota_ec =</span> mat_nota <span class="op">+</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(mat_nota_ec)</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 3
 ##   nome   mat_nota mat_nota_ec
 ##   &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
@@ -417,22 +427,22 @@ code > span.ot { color: #007020; }
 <li>Encontre o min, max e mediana de reading_nota para estudantes femininas da escola do sul.</li>
 <li>Observe cada um dos blocos de códigos a seguir. Ambos fazem a mesma coisa. Qual deles você acha que é preferível do ponto de vista da eficiência do computador?</li>
 </ol>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co">#Código 1</span></a>
-<a class="sourceLine" id="cb29-2" title="2">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(escola, prof) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">max_mat_nota =</span> <span class="kw">max</span>(mat_nota)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-5" title="5"><span class="st">  </span><span class="kw">filter</span>(escola <span class="op">==</span><span class="st"> &quot;south&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co">#Código 1</span></a>
+<a class="sourceLine" id="cb31-2" title="2">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(escola, prof) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">max_mat_nota =</span> <span class="kw">max</span>(mat_nota)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="st">  </span><span class="kw">filter</span>(escola <span class="op">==</span><span class="st"> &quot;south&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ## # Groups:   escola [1]
 ##   escola prof    max_mat_nota
 ##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
 ## 1 south  johnson            4
 ## 2 south  perry              5</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co">#Código 2</span></a>
-<a class="sourceLine" id="cb31-2" title="2">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="kw">filter</span>(escola <span class="op">==</span><span class="st"> &quot;south&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(prof) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">max_mat_nota =</span> <span class="kw">max</span>(mat_nota))</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">#Código 2</span></a>
+<a class="sourceLine" id="cb33-2" title="2">notas <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="st">  </span><span class="kw">filter</span>(escola <span class="op">==</span><span class="st"> &quot;south&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(prof) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">max_mat_nota =</span> <span class="kw">max</span>(mat_nota))</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   prof    max_mat_nota
 ##   &lt;chr&gt;          &lt;dbl&gt;
