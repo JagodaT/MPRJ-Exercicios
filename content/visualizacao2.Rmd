@@ -1,0 +1,96 @@
+---
+title: "Visualização com ggplot2"
+output: 
+  rmdformats::readthedown:
+    number_sections: true
+    highlight: default
+    
+  
+---
+
+# Introdução
+
+Os exercícios a seguir foram retirados de [https://www.yan-holtz.com/PDF/Ggplot2_basicTP.html]. Esta lista contempla algumas funcionalidades básicas do `ggplot2`, além de fazer uso do pacote `dplyr` para a manipulação dos dados.
+
+Para fazer esta lista, crie um notebook no Rstudio. Tente separar os exercícios em _chunks_ e documentar os comentários/respostas pertinentes. Para realizar os exercícios, precisaremos carregar os pacotes `ggplot2` e `dplyr` : 
+
+```
+library(ggplot2)
+library(dplyr)
+
+# caso algum pacote não esteja instalado: install.packages(...)
+```
+
+Podemos, alternativamente, carregar a biblioteca `tidyverse`, que "contém" (dentre outros) os pacotes `ggplot2` e `dplyr`: 
+
+```
+library(tidyverse)
+```
+
+
+```{r, include=F}
+suppressPackageStartupMessages(library(tidyverse))
+knitr::opts_chunk$set(collapse=TRUE)
+```
+
+
+# Correlação
+
+Nesta secção, iremos abordar _scatterplots_ e _bubble plots_, dois dos gráficos mais comuns para visualizar correlações entre variáveis.
+
+## 
+  Carrege o dataset `gapminder`, contido no pacote `gapminder`. Observe as primeiras 6 linhas com a função `head()` e descreva brevemente o que você observa. Quantas linhas este dataset tem? Utilize a função `nrow()`:
+  
+```
+# instale o pacote se necessário: install.packages(...)
+
+# carregue o pacote
+library(...)
+
+# agora que você carregou o pacote, o objeto gapminder pode ser acessado. Dê uma olhada:
+head(...)
+
+# quantas linhas?
+nrow(...)
+
+
+```
+##
+  
+
+
+#Exercícios
+
+1. Quantas linhas `df` possui? E colunas? (Faça usando código R)
+
+2. O que a variável `drv` descreve? (Leia o help em `?mpg`)
+
+3. Faça um _scatterplot_ de`hwy`por `cyl`. Que relação podemos traçar entre estas variáveis? Como podemos explicar essa relação?
+
+4. O que acontece se você fizer um _scatterplot_ entre `class` e `drv`? Porque este gráfico não é útil? Você consegue pensar em uma visualização que seria mais útil para essas variáveis?
+
+5. Quais variáveis de `df` são categóricas? Quais são contínuas? (lembre-se de ler a documentação em `?mpg`). Como poderíamos descobrir isso a partir de `df`?
+
+6. Lembre-se que podemos criar um _grid_ de gráficos no ggplot adicionando `facet_wrap()`.
+    
+    * Rode:  
+    
+  
+        ```
+        df %>% ggplot(aes(x = displ, y = hwy)) + 
+          geom_point() + 
+          facet_wrap(~ class, nrow = 2)
+        ```
+    * Agora rode o seguinte código. O que ele faz?  
+    
+      
+        ```
+        df %>% ggplot(aes(x = displ, y = hwy)) + 
+          geom_point() + 
+          facet_wrap(vars(cyl,drv), nrow = 3)  
+        
+        ```
+    
+  
+
+7. Adicione um faceteamento no gráfico da questão 4 utilizando a variável `manufacturer`. Escolha o número adequado de linhas (`nrow`) para a visualização. Este faceteamento foi útil? Por quê?
