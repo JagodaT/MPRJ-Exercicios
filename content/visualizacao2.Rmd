@@ -29,6 +29,8 @@ library(tidyverse)
 
 ```{r, include=F}
 suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(plotly))
 knitr::opts_chunk$set(collapse=TRUE)
 ```
 
@@ -55,41 +57,115 @@ nrow(...)
 
 ```
 ##
+  Quantos anos estão disponíveis neste dataset? Quantas observações ("data-points") existem para cada ano? Abaixo temos o código completo para responder a essas perguntas (lembre-se dos verbos do `dplyr`, e caso você não conheça alguma das funções, consulte `help(...)` ou `?...`).
+  
+```
+# Número de anos diferentes:
+
+gapminder %>%
+  select(year) %>%
+  unique() %>%
+  nrow()
+  
+# número de países disponíveis por ano?
+
+gapminder %>%  
+  group_by(year)
+  summarize( n=n() )
   
 
+```
 
-#Exercícios
 
-1. Quantas linhas `df` possui? E colunas? (Faça usando código R)
-
-2. O que a variável `drv` descreve? (Leia o help em `?mpg`)
-
-3. Faça um _scatterplot_ de`hwy`por `cyl`. Que relação podemos traçar entre estas variáveis? Como podemos explicar essa relação?
-
-4. O que acontece se você fizer um _scatterplot_ entre `class` e `drv`? Porque este gráfico não é útil? Você consegue pensar em uma visualização que seria mais útil para essas variáveis?
-
-5. Quais variáveis de `df` são categóricas? Quais são contínuas? (lembre-se de ler a documentação em `?mpg`). Como poderíamos descobrir isso a partir de `df`?
-
-6. Lembre-se que podemos criar um _grid_ de gráficos no ggplot adicionando `facet_wrap()`.
-    
-    * Rode:  
-    
+##
+  Construa um _scatterplot_ mostrando a relação entre `gdpPercap` e `lifeExp` em 1952. Utilize `geom_point()`. O que você observa?
   
-        ```
-        df %>% ggplot(aes(x = displ, y = hwy)) + 
-          geom_point() + 
-          facet_wrap(~ class, nrow = 2)
-        ```
-    * Agora rode o seguinte código. O que ele faz?  
-    
-      
-        ```
-        df %>% ggplot(aes(x = displ, y = hwy)) + 
-          geom_point() + 
-          facet_wrap(vars(cyl,drv), nrow = 3)  
-        
-        ```
-    
-  
+```
+# complete as lacunas
 
-7. Adicione um faceteamento no gráfico da questão 4 utilizando a variável `manufacturer`. Escolha o número adequado de linhas (`nrow`) para a visualização. Este faceteamento foi útil? Por quê?
+gapminder %>%  
+  filter(year=="1952") %>%
+  ggplot( aes(x=..., y=...)) +
+    geom...
+
+
+```
+
+##
+  No gráfico anterior, um país se destaca. Qual? Complete o código abaixo para identificá-lo:
+  
+```
+gapminder %>%
+  filter(...)
+```
+
+Você deverá obter algo como:
+```{r, echo=F}
+gapminder %>% 
+  filter(year==1952 & gdpPercap>100000)
+
+```
+
+##
+  Agora, contrua o mesmo _scatterplot_, mas sem exibir este país. Você percebe alguma tendência? Qual? Ela faz sentido? O que poderia melhorar na visualização?
+  
+```
+# complete:
+
+gapminder %>%
+  filter(...) %>%
+  ggplot(...
+
+```
+
+Você deve obter um gráfico como este:
+
+```{r, echo=F}
+gapminder %>% 
+  filter(year==1952 & gdpPercap<100000) %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp)) +  
+    geom_point()
+```
+
+##
+  Colora os pontos de acordo com seus continentes (coluna `continent`). No parâmetro `aes()`, use o argumento `color` (lembre-se de recorrer ao `help(ggplot)` ou `?ggplot`)
+  
+```
+gapminder %>%
+  filter(...) %>%
+  ggplot( aes(..., color=...)) +
+    ...
+
+```
+
+## 
+  Vamos adicionar mais uma variável à nossa visualização: fazer o tamanho dos círculos proporcional à população do país (`pop`). Isto é feito utilizando o argumento `size` de `aes()`. 
+  
+## Bônus
+
+Agora, tente o seguinte:
+
+* experimente o tema `theme_minimal()` do `ggplot2`
+* adicione transparência para os círculos com o argumento `alpha` em `geom_point()`
+* ordene os dados por tamanho de população para colocar os círculos menores por cima dos maiores
+* utilize a função `ggplotly()` do pacote `plotly` para tornar este gráfico interativo
+
+Você deverá obter algo como este gráfico:
+
+```{r, echo=F}
+
+p <- gapminder %>% 
+    filter(year==1952 & gdpPercap<100000) %>%
+    arrange(pop) %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp,
+             fill=continent,
+             size=pop)) +  
+      geom_point(alpha = 0.8, stroke = 0.3) +
+      scale_size(guide=F) +
+      theme_minimal()
+ggplotly(p)
+  
+    
+
+```
+
