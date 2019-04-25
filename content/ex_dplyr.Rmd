@@ -171,6 +171,12 @@ notas %>% group_by(prof) %>% filter(max(mat_nota) == 5)
 1. Filtre para o gênero com uma nota média de matemática igual a 4. 
 2. Explique porque o código remove estudantes que tem a Perry como professora deles.
 
+```{r}
+notas %>% 
+  group_by(prof) %>% 
+  filter(mat_nota <= 3)
+```
+
 
 # Mutate
 ## Exemplo
