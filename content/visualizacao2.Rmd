@@ -4,13 +4,12 @@ output:
   rmdformats::readthedown:
     number_sections: true
     highlight: default
-    
-  
+   
 ---
 
 # Introdução
 
-Os exercícios a seguir foram retirados de [https://www.yan-holtz.com/PDF/Ggplot2_basicTP.html]. Esta lista contempla algumas funcionalidades básicas do `ggplot2`, além de fazer uso do pacote `dplyr` para a manipulação dos dados.
+Os exercícios a seguir foram retirados do site https://www.yan-holtz.com/PDF/Ggplot2_basicTP.html. Esta lista contempla algumas funcionalidades básicas do `ggplot2`, além de fazer uso do pacote `dplyr` para a manipulação dos dados.
 
 Para fazer esta lista, crie um notebook no Rstudio. Tente separar os exercícios em _chunks_ e documentar os comentários/respostas pertinentes. Para realizar os exercícios, precisaremos carregar os pacotes `ggplot2` e `dplyr` : 
 
