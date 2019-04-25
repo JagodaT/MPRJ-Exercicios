@@ -1,0 +1,171 @@
+---
+title: "Visualização com ggplot2"
+output: 
+  rmdformats::readthedown:
+    number_sections: true
+    highlight: default
+   
+---
+
+# Introdução
+
+Os exercícios a seguir foram retirados do site https://www.yan-holtz.com/PDF/Ggplot2_basicTP.html. Esta lista contempla algumas funcionalidades básicas do `ggplot2`, além de fazer uso do pacote `dplyr` para a manipulação dos dados.
+
+Para fazer esta lista, crie um notebook no Rstudio. Tente separar os exercícios em _chunks_ e documentar os comentários/respostas pertinentes. Para realizar os exercícios, precisaremos carregar os pacotes `ggplot2` e `dplyr` : 
+
+```
+library(ggplot2)
+library(dplyr)
+
+# caso algum pacote não esteja instalado: install.packages(...)
+```
+
+Podemos, alternativamente, carregar a biblioteca `tidyverse`, que "contém" (dentre outros) os pacotes `ggplot2` e `dplyr`: 
+
+```
+library(tidyverse)
+```
+
+
+```{r, include=F}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(plotly))
+knitr::opts_chunk$set(collapse=TRUE)
+```
+
+
+# Correlação
+
+Nesta secção, iremos abordar _scatterplots_ e _bubble plots_, dois dos gráficos mais comuns para visualizar correlações entre variáveis.
+
+## 
+  Carrege o dataset `gapminder`, contido no pacote `gapminder`. Observe as primeiras 6 linhas com a função `head()` e descreva brevemente o que você observa. Quantas linhas este dataset tem? Utilize a função `nrow()`:
+  
+```
+# instale o pacote se necessário: install.packages(...)
+
+# carregue o pacote
+library(...)
+
+# agora que você carregou o pacote, o objeto gapminder pode ser acessado. Dê uma olhada:
+head(...)
+
+# quantas linhas?
+nrow(...)
+
+
+```
+##
+  Quantos anos estão disponíveis neste dataset? Quantas observações ("data-points") existem para cada ano? Abaixo temos o código completo para responder a essas perguntas (lembre-se dos verbos do `dplyr`, e caso você não conheça alguma das funções, consulte `help(...)` ou `?...`).
+  
+```
+# Número de anos diferentes:
+
+gapminder %>%
+  select(year) %>%
+  unique() %>%
+  nrow()
+  
+# número de países disponíveis por ano?
+
+gapminder %>%  
+  group_by(year)
+  summarize( n=n() )
+  
+
+```
+
+
+##
+  Construa um _scatterplot_ mostrando a relação entre `gdpPercap` e `lifeExp` em 1952. Utilize `geom_point()`. O que você observa?
+  
+```
+# complete as lacunas
+
+gapminder %>%  
+  filter(year=="1952") %>%
+  ggplot( aes(x=..., y=...)) +
+    geom...
+
+
+```
+
+##
+  No gráfico anterior, um país se destaca. Qual? Complete o código abaixo para identificá-lo:
+  
+```
+gapminder %>%
+  filter(...)
+```
+
+Você deverá obter algo como:
+```{r, echo=F}
+gapminder %>% 
+  filter(year==1952 & gdpPercap>100000)
+
+```
+
+##
+  Agora, contrua o mesmo _scatterplot_, mas sem exibir este país. Você percebe alguma tendência? Qual? Ela faz sentido? O que poderia melhorar na visualização?
+  
+```
+# complete:
+
+gapminder %>%
+  filter(...) %>%
+  ggplot(...
+
+```
+
+Você deve obter um gráfico como este:
+
+```{r, echo=F}
+gapminder %>% 
+  filter(year==1952 & gdpPercap<100000) %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp)) +  
+    geom_point()
+```
+
+##
+  Colora os pontos de acordo com seus continentes (coluna `continent`). No parâmetro `aes()`, use o argumento `color` (lembre-se de recorrer ao `help(ggplot)` ou `?ggplot`)
+  
+```
+gapminder %>%
+  filter(...) %>%
+  ggplot( aes(..., color=...)) +
+    ...
+
+```
+
+## 
+  Vamos adicionar mais uma variável à nossa visualização: fazer o tamanho dos círculos proporcional à população do país (`pop`). Isto é feito utilizando o argumento `size` de `aes()`. 
+  
+## Bônus
+
+Agora, tente o seguinte:
+
+* experimente o tema `theme_minimal()` do `ggplot2`
+* adicione transparência para os círculos com o argumento `alpha` em `geom_point()`
+* ordene os dados por tamanho de população para colocar os círculos menores por cima dos maiores
+* utilize a função `ggplotly()` do pacote `plotly` para tornar este gráfico interativo
+
+Você deverá obter algo como este gráfico:
+
+```{r, echo=F}
+
+p <- gapminder %>% 
+    filter(year==1952 & gdpPercap<100000) %>%
+    arrange(pop) %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp,
+             fill=continent,
+             size=pop)) +  
+      geom_point(alpha = 0.8, stroke = 0.3) +
+      scale_size(guide=F) +
+      theme_minimal()
+ggplotly(p)
+  
+    
+
+```
+
