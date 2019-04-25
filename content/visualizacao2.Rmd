@@ -4,6 +4,7 @@ output:
   rmdformats::readthedown:
     number_sections: true
     highlight: default
+    toc_depth: 3
    
 ---
 
@@ -100,6 +101,7 @@ gapminder %>%
 ```
 
 Você deverá obter algo como:
+
 ```{r, echo=F}
 gapminder %>% 
   filter(year==1952 & gdpPercap>100000)
@@ -169,3 +171,140 @@ ggplotly(p)
 
 ```
 
+
+# Distribuições
+
+Esta parte é dedicada à visualização de distribuições. Separaremos em duas partes:
+
+* Visualizando uma distribuição
+* Comparando distribuições para diversos grupos ou variáveis
+
+## Uma distribuição
+
+Utilizaremos um dataset contendo o preço de AirBnb por noite de ~1000 residências na Riviera francesa. Os dados estão armazenados no Github, e podem ser carregados da seguinte forma:
+
+```
+# Carregando o dataset a partir do github
+
+data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", header=TRUE)
+
+
+```
+
+```{r, include=F}
+data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", header=TRUE)
+```
+
+
+###
+  O dataset contém quantas linhas? (use `nrow()`). Qual é o valor mínimo? E o máximo (utilize `summary()` )? Você observa algo estranho? Que tipo de gráfico você utilizaria para visualizar estes dados.
+  
+###
+  Construa um histograma com os dados, utilizando `geom_histogram()`. Você está satisfeito com o resultado? Como podemos melhorar?
+  
+```
+data %>%
+  ggplot( aes(...)) +
+    geom_histogram()
+
+```
+
+###
+  Construa um histograma contemplando preços *cima de* 1500 euros. `ggplot2` vai mostrar uma mensagem de erro, por quê? O que ela significa? Qual é a maior desvantagem deste histograma?
+  
+```
+data %>%
+  fil.. %>%
+  gg...
+  
+```
+
+### 
+  Construa o histograma com diferentes valores de `binwidth` (a largura das barras), para preços menores que 400 euros. O que você observa? É importante "brincar" com este parâmetro?
+  
+```
+...
+    geom_histogram(binwidth = ...)
+```
+
+### 
+  Utilize `geom_density()` para construir um gráfico de densidade. Utilize o argumento `fill` para escolher a cor. Utilize o `help()` para descobrir qual é o equivalente de `binwidth` para o gráfico de densidade. Observe o efeito para diferentes valores.
+  
+  
+## Várias distribuições
+
+Para esta secção, utilizaremos outro dataset armazenado no Github. Perguntas como _Que probabilidade você designaria à frase `Altamente provável`_ foram respondidas em uma escala de 0-100. Estes dados nos permitem entender como as pessoas percebem o vocabulário de probabilidades. vamos carregar este dataset da seguinte forma:
+
+```{r}
+# carregando os dados
+
+data <- read.table("https://raw.githubusercontent.com/holtzy/Teaching/master/DATA/probability.csv", header=TRUE, sep=",")
+```
+
+
+### 
+  Como de costume, verifique as principais características destes dados com `nrow()`, `head()`, `summary()` ou qualquer outra função que você considere útil.
+  
+###
+  Que tipo de gráfico você utilizaria para compara as 8 categorias?
+  
+###
+  Construa um *boxplot* simples, utilizando o default de `geom_boxplot()`
+  
+```
+data %>%
+  ggplot( aes(x=..., y=..., fil=...)) +
+    geom_boxplot()
+    
+```
+
+###
+  O que você observa? Você consegue melhorar este gráfico? O que você mudaria? Você lembra o que cada parte do "box" representa?
+  
+  
+###
+  Adicione as seguintes modificações ao gráfico anterior:
+  * ordenar os grupos em ordem crescente da mediana da coluna `value`. Isto é feito utilizando o pacote `forcats`
+  * inverter os eixos X e Y (`coord_flip()`)
+  * elimine a legenda (`theme`)
+  
+```
+library(forcats) #  desnecessário se você utilizou library(tidyverse)
+
+data %>%
+  mutate(text = fct_reorder(text, value, .fun = median)) %>%  
+  ggplot( aes(...)) + 
+    geom_box... + 
+    theme( ... ) +
+    ...
+    
+    
+```
+
+### 
+  Qual é a desvantagem deste boxplot? Como podemos melhorá-lo?
+  
+###
+  Vamos agora mostrar as observações individualmente utilizando `geom_jitter()`. Explique o que esta função faz. Tente conseguir um bom gráfico utilizando as opções `width`, `size`, `alpha` e `color`.
+  
+```{r}
+data %>%
+  mutate(text = fct_reorder(text, value, .fun = median)) %>%
+  ggplot(aes(x=text, y=value, fill=text)) +
+    geom_boxplot() +
+    geom_jitter(color="grey", width=.4, size=.5, alpha=.8) +
+    theme(
+      legend.position = "none"
+    ) +
+    coord_flip()
+```
+
+  
+### Bônus
+  * construa um *violin plot* com `geom_violin()`
+  * descubra como adicionar um círculo vermelho representando a média de cada grupo
+  * faça uma busca na internet para construir um *ridgeline chart*
+  
+  
+
+# Ranqueamento
