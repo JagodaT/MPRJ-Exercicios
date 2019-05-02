@@ -1,5 +1,5 @@
 ---
-title: "Visualização com ggplot2"
+title: "Visualização com ggplot2 - 2"
 output: 
   rmdformats::readthedown:
     number_sections: true
@@ -304,3 +304,114 @@ data %>%
   
 
 # Ranqueamento
+
+Nesta seção iremos utilizar os dados dos 50 maiores exportadores de armas (em 2017). Este dataset está disponível no github. Carregando os dados:
+
+
+```{r}
+# Carregando o dataset do github
+
+data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum.csv", header=TRUE, sep=",")
+
+```
+
+
+##
+Dê uma olhada nos dados, e descreva-os. Quais gráficos podem ser utilizados para vizualisar estes dados? Qual seria o melhor, na sua opinião? Quais países estão no topo do ranking?
+
+
+##
+Comece com um gráfico de barras básico utlizando `geom_bar()`. 
+**Observação**: por default `geom_bar()` aceita uma variável categórica como entrada, utilizada no eixo `x`, e conta o número de casos a cada posição x exibindo os no eixo `y`. No nosso caso, queremos um valor de `y` para cada grupo, por isso precisamos especificar `stat="identity"`.
+
+```
+data %>%
+  ggplot( ... ) +
+    geom_bar(stat="identity")
+
+```
+
+
+##
+Colora todas as barras com a mesma cor: `#69b3a2`. Não gostou da cor? Escolha [outra](https://www.w3schools.com/colors/colors_picker.asp). Você tem que utilizar `fill` ou `color`? Por quê?
+
+
+##
+Escolha uma cor diferente para cada barra. Você gosta do resultado? Ele é útil? Você entende a diferença entre adicionar a opção de cor dentro ou fora de `aes()`?
+
+
+##
+Os gráficos anteriores não são ideais, certo? O que você pode melhorar?
+
+
+##
+
+Tente o seguinte:  
+
+*  utilize `coord_flip()` para obter uma versão horizontal  
+
+* observe o código abaixo para reordenar os países:
+
+```
+data %>%
+  # reorganizar os dados
+  arrange(Value) %>%
+  mutate(Country=factor(Country,Country)) %>%
+  
+  # faça o gráfico
+  ...
+  
+```
+
+você deve obter algo como:
+
+
+
+##
+Um [lollipop plot](https://www.r-graph-gallery.com/lollipop-plot/) é utilizado sob as mesmas circunstâncias que um gráfico de barras. Contrua um com:  
+
+* `geom_segment()` para as linhas. Argumentos necessários são `x`, `xend`, `y` e `yend`.
+* `geom_point()` para os círculos. 
+
+você deve obter:
+
+
+
+## Bônus
+* Melhore o gráfico anterior com o tema `theme_minimal`.
+* Pesquise [treemaps](https://www.r-graph-gallery.com/treemap/). Aplique este gráfico para os dados acima. Você deve obter algo como o gráfico abaixo:
+* Pesquise o que é um gráfico de barras circular (circular barchart). Quais são seus prós e contras? Tente implementá-lo em R e com `ggplot2`.
+
+
+# Evolução
+
+Vamos considerar a evolução do preço de bitcoins entre Abril de 2013 e Abril de 2018. Os dados estão disponíveis no github. Carregue o dataset utilizando o código:
+
+```{r}
+
+data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered.csv", header=T)
+
+
+data$date <- as.Date(data$date)
+
+
+```
+
+##
+Construa um gráfico básico mostrando a evolução dos preços de bitcoin utilizando `geom_line()`.
+
+```
+data %>%
+  ggplot(...) +
+    geom_line()
+```
+
+##
+Faça agora um gráfico de área utilizando `geom_area()`. Utilize `color` e `fill` para customizar as cores do gráfico.
+
+##
+Selecione os últimos 10 valores utilizando `tail()`. Construa um *scatterplot* conectado (pontos ligados por linhas), com `geom_point()`, `geom_line()` e `geom_area()`.
+
+
+## Bônus
+Pesquise [séries temporais](https://www.r-graph-gallery.com/time-series/). Tente utilizar o widget HTML `dygraph` para construir uma versão interativa deste gráfico. Você deve obter algo como: 
